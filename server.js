@@ -52,3 +52,43 @@ app.post('/cases', (req, res) => {
 app.listen(port, () => {
   console.log(`ReClaim backend running on port ${port}`);
 });
+app.get('/openapi.json', (req, res) => {
+  res.json({
+    openapi: "3.0.0",
+    info: {
+      title: "ReClaim Backend API",
+      version: "1.0.0"
+    },
+    paths: {
+      "/templates/{template_id}": {
+        get: {
+          summary: "Get a letter template by ID",
+          parameters: [
+            {
+              name: "template_id",
+              in: "path",
+              required: true,
+              schema: { type: "string" }
+            }
+          ],
+          responses: {
+            200: {
+              description: "Template details",
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "object",
+                    properties: {
+                      template_body: { type: "string" },
+                      citations: { type: "array", items: { type: "string" } }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  });
+});
