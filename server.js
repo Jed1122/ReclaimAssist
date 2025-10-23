@@ -48,16 +48,14 @@ app.post('/cases', (req, res) => {
   const id = nanoid(10);
   res.json({ case_id: id, status_url: `https://example.com/cases/${id}` });
 });
-
-app.listen(port, () => {
-  console.log(`ReClaim backend running on port ${port}`);
-});
+// Expose OpenAPI schema so the MCP workflow can detect your backend tools
 app.get('/openapi.json', (req, res) => {
   res.json({
     openapi: "3.0.0",
     info: {
       title: "ReClaim Backend API",
-      version: "1.0.0"
+      version: "1.0.0",
+      description: "Provides template retrieval and related backend services for ReClaim Assist"
     },
     paths: {
       "/templates/{template_id}": {
@@ -80,7 +78,10 @@ app.get('/openapi.json', (req, res) => {
                     type: "object",
                     properties: {
                       template_body: { type: "string" },
-                      citations: { type: "array", items: { type: "string" } }
+                      citations: {
+                        type: "array",
+                        items: { type: "string" }
+                      }
                     }
                   }
                 }
@@ -91,4 +92,7 @@ app.get('/openapi.json', (req, res) => {
       }
     }
   });
+});
+app.listen(port, () => {
+  console.log(`ReClaim backend running on port ${port}`);
 });
