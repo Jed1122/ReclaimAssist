@@ -1,14 +1,17 @@
 {
   "name": "reclaim-backend",
   "version": "1.0.0",
+  "description": "ReClaim Assist backend and MCP bridge",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "mcp": "node mcp.js"
   },
+  "engines": {
+    "node": ">=18"
+  },
   "dependencies": {
-    "express": "^4.18.2",
     "cors": "^2.8.5",
-    "node-fetch": "^3.3.2"
+    "express": "^4.19.2"
   }
 }
